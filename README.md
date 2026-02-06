@@ -31,8 +31,8 @@ However at the time of creation of this application no tool was found to explore
 ### Demon data
 The demons data (tribes, names, levels, stats, resistances, skills...) was taken from [https://erikku.github.io/smt4tool/](https://erikku.github.io/smt4tool/). It has been processed with some minor corrections (like spelling mistakes or fusion chart errors) and the application uses the following files:
 
-- [src/assets/files/demons.json](TODO: add link) contains all demons with their stats, resistances, skill references and special fusions if any
-- [src/assets/files/fusionsByDemon.json](TODO: add link) contains all direct fusions for each demon
+- [src/assets/files/demons.json](https://github.com/fab5code/smt4assistant/blob/main/src/assets/files/demons.json) contains all demons with their stats, resistances, skill references and special fusions if any
+- [src/assets/files/fusionsByDemon.json](https://github.com/fab5code/smt4assistant/blob/main/src/assets/files/fusionsByDemon.json) contains all direct fusions for each demon
 
 ### Full images
 The images were taken from a fan made hd texture pack of the game [https://community.citra-emu.org/t/kasaskis-shin-megami-tensei-iv-hd-texture-pack/180130](https://community.citra-emu.org/t/kasaskis-shin-megami-tensei-iv-hd-texture-pack/180130). Each demon image from the texture pack was nameless so a lot of work (mostly using scripts) was done to identify each image.
@@ -42,7 +42,7 @@ The images in the application have a lower resolution than the ones in the textu
 ### Thumbnails
 The texture pack also has a thumbnail for each demon. A thumbnail is not the whole image here but a small portion of the image that represents well the demon. The thumbnails used in the applications were created by identifying in which image belongs each texture pack thumbnail and recreating it from the hd image.
 
-The thumbnails are available in [src/assets/img/demonThumbnails/](TODO: add link).
+The thumbnails are available in [src/assets/img/demonThumbnails/](https://github.com/fab5code/smt4assistant/tree/main/src/assets/img/demonThumbnails).
 
 ### Fix an error in the demon data
 Modify *data/resource/demons.json*.
