@@ -48,7 +48,7 @@ export class ImageTooltipDirective {
 
   updateImage(): void {
     if (this.imageElement) {
-      this.imageElement.src = `../assets/img/demons/${this.appImageTooltip.name}.webp`;
+      this.imageElement.src = `assets/img/demons/${this.appImageTooltip.name}.webp`;
     }
   }
 

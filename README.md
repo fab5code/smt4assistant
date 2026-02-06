@@ -2,7 +2,7 @@
 The aim of this application is to provide an easy way to manage fusions while playing the video game Shin Megami Tensei IV.
 You can use this application to search for available direct and chained fusions considering the player level, the demons in your party and demons you have marked as easy to scout.
 
-You can use the application here: [https://github.io/fab5code/smt4assistant](https://github.io/fab5code/smt4assistant).
+You can use the application here: [https://fab5code.github.io/smt4assistant](https://fab5code.github.io/smt4assistant).
 
 Beside the application itself you may be curious of
 
