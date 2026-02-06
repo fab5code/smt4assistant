@@ -1,0 +1,10 @@
+<form class="l-playerInfo">
+  <mat-form-field>
+    <mat-label for="playerLevel">Player level</mat-label>
+    <input id="playerLevel" [ngModelOptions]="{standalone: true}" matInput type="number" [(ngModel)]="playerInfo.level" (ngModelChange)="onPlayerInfoChange()" min="1" max="99">
+  </mat-form-field>
+</form>
+<div *ngIf="stats" class="l-stats">
+  <p>Number of collected demons: {{stats.nbCollectedDemons}}/{{stats.nbDemons}}</p>
+  <p>Number of easy to scout demons: {{stats.nbEasyDemons}}</p>
+</div>

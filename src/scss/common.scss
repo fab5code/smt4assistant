@@ -1,0 +1,203 @@
+@import 'variables.scss';
+
+////////////
+// Layout //
+////////////
+.l-flexContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.l-flexGrowingChild {
+  min-height: 0;
+  overflow: auto;
+  flex: 1 1 auto;
+}
+
+////////////
+// Filter //
+////////////
+.l-filter {
+  padding: 5px 5px 5px 0;
+}
+
+.l-filterButton.mdc-button--unelevated {
+  height: 30px;
+  padding: 0 5px;
+  margin: 0 5px;
+  font-size: 14px;
+}
+
+///////////
+// Table //
+///////////
+.l-table {
+  width: 100%;
+  border-spacing: 0;
+
+  tr:nth-child(even) {
+    background-color: $color-background2;
+  }
+}
+
+.l-tableHeader {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background-color: $color-background;
+}
+
+.l-tableSquare {
+  padding: 0 5px;
+}
+
+.l-tableSquare-number {
+  text-align: center;
+}
+
+.l-tableSquareLink {
+  font-size: 16px;
+}
+
+///////////////
+// Alignment //
+///////////////
+.law {
+  color: $color-law;
+}
+.neutral {
+  color: $color-neutral;
+}
+.chaos {
+  color: $color-chaos;
+}
+.special {
+  color: $color-special;
+}
+
+///////////////////
+// Demon details //
+///////////////////
+.l-demonDetails-helpMessage {
+  padding: 0 5px;
+}
+
+.l-demonDetails-info {
+  display: flex;
+  align-items: center;
+}
+
+.l-demonDetails-info-text {
+  padding: 5px;
+}
+
+.l-demonDetails-info-link {
+  font-size: 16px;
+}
+
+.l-demonDetails-fusionTitle {
+  padding: 5px 5px 10px 5px;
+  margin: 0;
+}
+
+.l-demonDetails-fusionTitle-complement {
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.l-demonDeatils-info-imageWrapper {
+  position: relative;
+  width: 102px;
+  height: 52px;
+  margin: 0 5px;
+  background-color: $color-background2;
+  clip-path: polygon(0 14px, 14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+
+  &:before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 14.00px, 14.00px 0, 100% 0, 100% calc(100% - 14.00px), calc(100% - 14.00px) 100%, 0 100%, 0 14.00px, 1px  calc(14.00px + 0.41px), 1px calc(100% - 1px), calc(100% - 14.00px - 0.41px) calc(100% - 1px), calc(100% - 1px) calc(100% - 14.00px - 0.41px), calc(100% - 1px) 1px, calc(14.00px + 0.41px) 1px, 1px calc(14.00px + 0.41px));
+  }
+
+  &.law:before {
+    background-color: $color-law;
+  }
+  &.neutral:before {
+    background-color: $color-neutral;
+  }
+  &.chaos:before {
+    background-color: $color-chaos;
+  }
+  &.special:before {
+    background-color: $color-special;
+  }
+}
+
+.l-demonDeatils-info-image {
+  position: relative;
+  top: 1px;
+  left: 1px;
+  clip-path: polygon(0 14px,14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%);
+}
+
+///////////////////
+// Image tooltip //
+///////////////////
+.l-imageTooltip {
+  visibility: hidden;
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  background: $color-background2;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease, visibility 0.2s ease, box-shadow 0.2s, ease;
+  box-shadow: 0px 5px 10px 5px #000000;
+
+  &.show {
+    width: 300px;
+    height: 300px;
+    overflow: visible;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease 0.3s, visibility 0.5s ease 0.3s, box-shadow 0.5s ease 0.3s;
+  }
+}
+
+.l-imageTooltip-arrow {
+  position: absolute;
+  background: $color-background2;
+  width: 16px;
+  height: 16px;
+  transform: rotate(45deg);
+}
+
+//////////////////////////////////////
+// Dialog in fusion graph component //
+//////////////////////////////////////
+app-fusion-graph {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+///////////
+// Alert //
+///////////
+.mat-mdc-snack-bar-container.l-alert-success {
+  --mdc-snackbar-container-color: #0D47A1;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}
+
+.mat-mdc-snack-bar-container.l-alert-error {
+  --mdc-snackbar-container-color: #B71C1C;
+  --mat-mdc-snack-bar-button-color: #fff;
+  --mdc-snackbar-supporting-text-color: #fff;
+}

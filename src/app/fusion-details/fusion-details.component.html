@@ -1,0 +1,100 @@
+<div *ngIf="demon" class="l-flexContainer">
+  <div class="l-demonDetails-info">
+    <div class="l-demonDeatils-info-imageWrapper" [appAlignment]="demon">
+      <img [src]="'../assets/img/demonThumbnails/' + demon.name + '.webp'" class="l-demonDeatils-info-image" width="100"
+        height="50">
+    </div>
+    <span class="l-demonDetails-info-text" [appAlignment]="demon">{{demon.tribe}}</span>
+    <button mat-button class="l-demonDetails-info-link" (click)="showDemonDetails(demon)" [appImageTooltip]="demon">
+      <span [appAlignment]="demon">{{demon.name}}</span>
+    </button>
+    <span class="l-demonDetails-info-text" [appAlignment]="demon">{{demon.level}}</span>
+    <span>Col</span>
+    <mat-checkbox [checked]="demon.userInfo && demon.userInfo.collected"
+      (change)="setDemonCollected($event.checked)"></mat-checkbox>
+    <span>Eas</span>
+    <mat-checkbox [checked]="demon.userInfo && demon.userInfo.easy"
+      (change)="setDemonEasy($event.checked)"></mat-checkbox>
+    <span>InP</span>
+    <mat-checkbox [checked]="demon.userInfo && demon.userInfo.inParty"
+      (change)="setDemonInParty($event.checked)"></mat-checkbox>
+  </div>
+
+  <h3 class="l-demonDetails-fusionTitle">
+    Fusions <span *ngIf="sortedFusionResults && sortedFusionResults.length > 0">({{sortedFusionResults.length}})</span>
+    <span *ngIf="searchOptions && (searchOptions.usedDemon || searchOptions.temporaryDemon)">
+      <span class="l-demonDetails-fusionTitle-complement"> always using</span>
+      <button *ngIf="searchOptions.usedDemon" mat-button class="l-demonDetails-info-link"
+        (click)="showDemonDetails(searchOptions.usedDemon)" [appImageTooltip]="searchOptions.usedDemon">
+        <span [appAlignment]="searchOptions.usedDemon">{{searchOptions.usedDemon.tribe}}
+          {{searchOptions.usedDemon.name}} ({{searchOptions.usedDemon.level}})</span>
+      </button>
+      <button *ngIf="searchOptions.temporaryDemon" mat-button class="l-demonDetails-info-link"
+        (click)="showDemonDetails(searchOptions.temporaryDemon)" [appImageTooltip]="searchOptions.temporaryDemon">
+        <span [appAlignment]="searchOptions.temporaryDemon">{{searchOptions.temporaryDemon.tribe}}
+          {{searchOptions.temporaryDemon.name}} ({{searchOptions.temporaryDemon.level}})</span>
+      </button>
+    </span>
+  </h3>
+  <div *ngIf="sortedFusionResults && sortedFusionResults.length > 0" class="l-flexGrowingChild">
+    <table mat-table matSort (matSortChange)="sortFusions($event)" class="l-table">
+      <tr class="l-tableHeader">
+        <th mat-sort-header="score" class="l-tableSquare">Score</th>
+        <th mat-sort-header="demons" class="l-tableSquare" disabled>Ingredients</th>
+        <th mat-sort-header="inPartyDemons" class="l-tableSquare" disabled>In party</th>
+        <th mat-sort-header="showFusionTree" class="l-tableSquare" disabled></th>
+        <th mat-sort-header="nbFusions" class="l-tableSquare">nbFus</th>
+        <th mat-sort-header="nbDemons" class="l-tableSquare">nbDem</th>
+        <th mat-sort-header="nbEasyNotInParty" class="l-tableSquare">NbEas</th>
+        <th mat-sort-header="nbInParty" class="l-tableSquare">NbInP</th>
+      </tr>
+
+      <tr mat-row *ngFor="let result of sortedFusionResults">
+        <td class="l-tableSquare l-tableSquare-number">{{result.score}}</td>
+        <td class="l-tableSquare">
+          <span *ngFor="let usedDemon of result.usedDemons | keyvalue">
+            <button mat-button class="l-tableSquareLink" (click)="showDemonDetails(usedDemon.key)"
+              [appImageTooltip]="usedDemon.key">
+              <span>{{usedDemon.value}} </span>
+              <span [appAlignment]="usedDemon.key">{{usedDemon.key.tribe}} </span>
+              <span [appAlignment]="usedDemon.key">{{usedDemon.key.name}} </span>
+              <span [appAlignment]="usedDemon.key">({{usedDemon.key.level}})</span>
+            </button>
+          </span>
+        </td>
+        <td class="l-tableSquare">
+          <span *ngFor="let inPartyDemon of result.inPartyDemons">
+            <button mat-button class="l-tableSquareLink" (click)="showDemonDetails(inPartyDemon)"
+              [appImageTooltip]="inPartyDemon">
+              <span [appAlignment]="inPartyDemon">{{inPartyDemon.tribe}} </span>
+              <span [appAlignment]="inPartyDemon">{{inPartyDemon.name}} </span>
+              <span [appAlignment]="inPartyDemon">({{inPartyDemon.level}})</span>
+            </button>
+          </span>
+        </td>
+        <td class="l-tableSquare">
+          <button mat-icon-button matTooltip="Show fusion tree" matTooltipPosition="left"
+            (click)="showFusionTree(result)"><mat-icon>merge</mat-icon></button>
+        </td>
+        <td class="l-tableSquare l-tableSquare-number">{{result.nbFusions}}</td>
+        <td class="l-tableSquare l-tableSquare-number">{{result.nbDemons}}</td>
+        <td class="l-tableSquare l-tableSquare-number">{{result.nbEasyNotInParty}}</td>
+        <td class="l-tableSquare l-tableSquare-number">{{result.nbInParty}}</td>
+      </tr>
+    </table>
+  </div>
+  <p *ngIf="searchOptions && searchOptions.usedDemon && searchOptions.usedDemon.tribe !== 'Element' && !searchOptions.usedDemon.userInfo.easy && !searchOptions.usedDemon.userInfo.inParty"
+    class="l-demonDetails-helpMessage">
+    There is no fusion available because the compulsory ingredient demon is neither easy to scout, in party or an
+    elemental.
+  </p>
+  <p *ngIf="sortedFusionResults && sortedFusionResults.length === 0 && !(searchOptions && searchOptions.usedDemon && searchOptions.usedDemon.tribe !== 'Element'
+      && !searchOptions.usedDemon.userInfo.easy && !searchOptions.usedDemon.userInfo.inParty)"
+    class="l-demonDetails-helpMessage">
+    There is no fusion available.
+  </p>
+</div>
+<p *ngIf="!demon" class="l-demonDetails-helpMessage">
+  Search any demon to see its available chained fusions using only the demons marked as easy to scout and in party and
+  elementals.
+</p>

@@ -1,0 +1,12 @@
+@import '@angular/material/theming';
+
+$app-primary: mat-palette($mat-red);
+$app-accent: mat-palette($mat-blue);
+$app-warn: mat-palette($mat-amber);
+
+$color-background: #121218;
+$color-background2: lighten($color-background, 2%);
+$color-law: #2196F3;
+$color-neutral: #FFFFFF;
+$color-chaos: #F44336;
+$color-special: #FF8F00;

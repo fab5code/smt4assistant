@@ -1,0 +1,70 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@use 'scss/palette-helper';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+@import 'scss/variables.scss';
+
+$app-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $app-primary,
+      accent: $app-accent,
+      warn: $app-warn,
+    ),
+  )
+);
+$app-theme: palette-helper.modify-background($app-theme, $color-background);
+
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($app-theme);
+
+.mat-raised-button.mat-warn,
+.mat-fab.mat-warn,
+.mat-mini-fab.mat-warn,
+.mat-flat-button,
+.mat-raised-button,
+.mat-fab,
+.mat-mini-fab,
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: $color-background;
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay,
+.mat-mdc-form-field:hover .mat-mdc-form-field-focus-overlay {
+  opacity: 0;
+}
+
+.mat-mdc-tab.mdc-tab {
+  height: 36px!important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 16px;
+}
+
+.mat-mdc-tab-body-wrapper {
+  height: 100%;
+}
+
+.mat-mdc-dialog-container {
+  --mdc-dialog-container-color: #16161e;
+}
+
+@import 'scss/common.scss';

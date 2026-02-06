@@ -1,0 +1,57 @@
+<div class="l-flexContainer">
+<div class="l-filter">
+  <button class="l-filterButton" mat-flat-button (click)="filterByPlayerLevel()" [color]="filterInfo.level ? 'primary' : ''">
+    <mat-icon *ngIf="filterInfo.level" fontIcon="filter_alt"></mat-icon>
+    Player level
+  </button>
+  <button class="l-filterButton" mat-flat-button (click)="filterByCollected()" [color]="filterInfo.collected === 1 ? 'primary' : (filterInfo.collected === 2 ? 'accent' : '')">
+    <mat-icon *ngIf="filterInfo.collected === 1" fontIcon="filter_alt"></mat-icon>
+    <mat-icon *ngIf="filterInfo.collected === 2" fontIcon="filter_alt_off"></mat-icon>
+    Collected
+  </button>
+  <button class="l-filterButton" mat-flat-button (click)="filterByEasy()" [color]="filterInfo.easy === 1 ? 'primary' : (filterInfo.easy === 2 ? 'accent' : '')">
+    <mat-icon *ngIf="filterInfo.easy === 1" fontIcon="filter_alt"></mat-icon>
+    <mat-icon *ngIf="filterInfo.easy === 2" fontIcon="filter_alt_off"></mat-icon>
+    Easy scout
+  </button>
+  <button class="l-filterButton" mat-flat-button (click)="filterByInParty()" [color]="filterInfo.inParty === 1 ? 'primary' : (filterInfo.inParty === 2 ? 'accent' : '')">
+    <mat-icon *ngIf="filterInfo.inParty === 1" fontIcon="filter_alt"></mat-icon>
+    <mat-icon *ngIf="filterInfo.inParty === 2" fontIcon="filter_alt_off"></mat-icon>
+    In party
+  </button>
+  <mat-form-field class="l-filterInput" >
+    <mat-label for="containsFilter">Contains</mat-label>
+    <input id="containsFilter" [ngModelOptions]="{standalone: true}" matInput type="text" placeholder="Ex. Pixie"
+        [(ngModel)]="filterInfo.contains" (ngModelChange)="onfilterContainsChange()">
+  </mat-form-field>
+</div>
+<div class="l-flexGrowingChild">
+  <table mat-table matSort (matSortChange)="sortDemons($event)" class="l-table">
+    <tr class="l-tableHeader">
+      <th mat-sort-header="tribe" class="l-tableSquare">Tribe</th>
+      <th mat-sort-header="name" class="l-tableSquare">Name</th>
+      <th mat-sort-header="level" class="l-tableSquare">Lvl</th>
+      <th mat-sort-header="collected" class="l-tableSquare">Collected</th>
+      <th mat-sort-header="easy" class="l-tableSquare">Easy scout</th>
+      <th mat-sort-header="inParty" class="l-tableSquare">In party</th>
+      <th mat-sort-header="searchFusion" class="l-tableSquare" disabled></th>
+    </tr>
+
+    <tr mat-row *ngFor="let demon of displayedDemons">
+      <td class="l-tableSquare" [appAlignment]="demon">{{demon.tribe}}</td>
+      <td class="l-tableSquare l-tableSquareLink">
+        <button mat-button class="l-tableSquareLink" (click)="showDemonDetails(demon)" [appImageTooltip]="demon">
+          <span [appAlignment]="demon">{{demon.name}}</span>
+        </button>
+      </td>
+      <td class="l-tableSquare l-tableSquare-number">{{demon.level}}</td>
+      <td class="l-tableSquare"><mat-checkbox [checked]="demon.userInfo && demon.userInfo.collected" (change)="setDemonCollected(demon.name, $event.checked)"></mat-checkbox></td>
+      <td class="l-tableSquare"><mat-checkbox [checked]="demon.userInfo && demon.userInfo.easy" (change)="setDemonEasy(demon.name, $event.checked)"></mat-checkbox></td>
+      <td class="l-tableSquare"><mat-checkbox [checked]="demon.userInfo && demon.userInfo.inParty" (change)="setDemonInParty(demon.name, $event.checked)"></mat-checkbox></td>
+      <td class="l-tableSquare">
+        <button mat-icon-button matTooltip="Search chained fusions" matTooltipPosition="left" (click)="showDemonFusionDetails(demon)"><mat-icon>search</mat-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>
+</div>

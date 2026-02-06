@@ -1,0 +1,149 @@
+<div *ngIf="demon" class="l-flexContainer">
+  <div class="l-demonDetails-info">
+    <div class="l-demonDeatils-info-imageWrapper" [appAlignment]="demon">
+      <img [src]="'../assets/img/demonThumbnails/' + demon.name + '.webp'" class="l-demonDeatils-info-image" width="100"
+        height="50">
+    </div>
+    <span class="l-demonDetails-info-text" [appAlignment]="demon">{{demon.tribe}}</span>
+    <span class="l-demonDetails-info-text" [appAlignment]="demon" [appImageTooltip]="demon">{{demon.name}}</span>
+    <span class="l-demonDetails-info-text" [appAlignment]="demon">{{demon.level}}</span>
+    <span>Col</span>
+    <mat-checkbox [checked]="demon.userInfo && demon.userInfo.collected"
+      (change)="setDemonCollected($event.checked)"></mat-checkbox>
+    <span>Eas</span>
+    <mat-checkbox [checked]="demon.userInfo && demon.userInfo.easy"
+      (change)="setDemonEasy($event.checked)"></mat-checkbox>
+    <span>InP</span>
+    <mat-checkbox [checked]="demon.userInfo && demon.userInfo.inParty"
+      (change)="setDemonInParty($event.checked)"></mat-checkbox>
+    <button mat-icon-button matTooltip="Search chained fusions"
+      (click)="showDemonFusionDetails(demon)"><mat-icon>search</mat-icon></button>
+  </div>
+
+  <h3 *ngIf="fusions && demon.fusions" class="l-demonDetails-fusionTitle">Special fusion</h3>
+  <div *ngIf="fusions && demon.fusions" class="l-flexGrowingChild">
+    <table mat-table class="l-table">
+      <tr class="l-tableHeader">
+        <th class="l-tableSquare">Tribe</th>
+        <th class="l-tableSquare">Name</th>
+        <th class="l-tableSquare">Level</th>
+        <th class="l-tableSquare">Coll</th>
+        <th class="l-tableSquare">Easy</th>
+        <th class="l-tableSquare">InPa</th>
+        <th class="l-tableSquare"></th>
+      </tr>
+
+      <tr mat-row *ngFor="let fusionDemon of fusions[0]">
+        <td class="l-tableSquare" [appAlignment]="fusionDemon">{{fusionDemon.tribe}}</td>
+        <td class="l-tableSquare l-tableSquareLink">
+          <button mat-button class="l-tableSquareLink" (click)="updateDemon(fusionDemon)"
+            [appImageTooltip]="fusionDemon">
+            <span [appAlignment]="fusionDemon">{{fusionDemon.name}}</span>
+          </button>
+        </td>
+        <td class="l-tableSquare l-tableSquare-number">{{fusionDemon.level}}</td>
+        <td class="l-tableSquare"><mat-icon *ngIf="fusionDemon.userInfo.collected" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare"><mat-icon *ngIf="fusionDemon.userInfo.easy" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare"><mat-icon *ngIf="fusionDemon.userInfo.inParty" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare">
+          <button mat-icon-button matTooltip="Search chained fusions" matTooltipPosition="left"
+            (click)="showDemonFusionDetails(fusionDemon)"><mat-icon>search</mat-icon></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <h3 *ngIf="fusions && !demon.fusions" class="l-demonDetails-fusionTitle">Fusions <span
+      *ngIf="fusions.length > 0">({{displayedFusions?.length}}/{{fusions.length}})</span></h3>
+  <div *ngIf="fusions && !demon.fusions && fusions.length > 0" class="l-filter">
+    <button class="l-filterButton" mat-flat-button (click)="filterByPlayerLevel()"
+      [color]="filterInfo.level ? 'primary' : ''">
+      <mat-icon *ngIf="filterInfo.level" fontIcon="filter_alt"></mat-icon>
+      Player level
+    </button>
+    <button class="l-filterButton" mat-flat-button (click)="filterByCollected()"
+      [color]="filterInfo.collected === 1 || filterInfo.collected === 2 ? 'primary' : (filterInfo.collected === 3 ? 'accent' : '')">
+      <mat-icon *ngIf="filterInfo.collected === 1 || filterInfo.collected === 2" fontIcon="filter_alt"></mat-icon>
+      <mat-icon *ngIf="filterInfo.collected === 3" fontIcon="filter_alt_off"></mat-icon>
+      <span *ngIf="filterInfo.collected === 0">Collected</span>
+      <span *ngIf="filterInfo.collected === 1">Any collected</span>
+      <span *ngIf="filterInfo.collected === 2">All collected</span>
+      <span *ngIf="filterInfo.collected === 3">Collected</span>
+    </button>
+    <button class="l-filterButton" mat-flat-button (click)="filterByEasy()"
+      [color]="filterInfo.easy === 1 || filterInfo.easy === 2 ? 'primary' : (filterInfo.easy === 3 ? 'accent' : '')">
+      <mat-icon *ngIf="filterInfo.easy === 1 || filterInfo.easy === 2" fontIcon="filter_alt"></mat-icon>
+      <mat-icon *ngIf="filterInfo.easy === 3" fontIcon="filter_alt_off"></mat-icon>
+      <span *ngIf="filterInfo.easy === 0">Easy scout</span>
+      <span *ngIf="filterInfo.easy === 1">Any easy scout</span>
+      <span *ngIf="filterInfo.easy === 2">All easy scout</span>
+      <span *ngIf="filterInfo.easy === 3">Easy scout</span>
+    </button>
+    <button class="l-filterButton" mat-flat-button (click)="filterByInParty()"
+      [color]="filterInfo.inParty === 1 || filterInfo.inParty === 2 ? 'primary' : (filterInfo.inParty === 3 ? 'accent' : '')">
+      <mat-icon *ngIf="filterInfo.inParty === 1 || filterInfo.inParty === 2" fontIcon="filter_alt"></mat-icon>
+      <mat-icon *ngIf="filterInfo.inParty === 3" fontIcon="filter_alt_off"></mat-icon>
+      <span *ngIf="filterInfo.inParty === 0">In party</span>
+      <span *ngIf="filterInfo.inParty === 1">Any in party</span>
+      <span *ngIf="filterInfo.inParty === 2">All in party</span>
+      <span *ngIf="filterInfo.inParty === 3">In party</span>
+    </button>
+  </div>
+  <div *ngIf="displayedFusions && !demon.fusions && displayedFusions.length > 0" class="l-flexGrowingChild">
+    <table mat-table matSort (matSortChange)="sortFusions($event)" class="l-table">
+      <tr class="l-tableHeader">
+        <th mat-sort-header="tribe0" class="l-tableSquare">Tribe</th>
+        <th mat-sort-header="name0" class="l-tableSquare">Name</th>
+        <th mat-sort-header="level0" class="l-tableSquare">Lvl</th>
+        <th mat-sort-header="collected0" class="l-tableSquare">Col</th>
+        <th mat-sort-header="easy0" class="l-tableSquare">Eas</th>
+        <th mat-sort-header="inParty0" class="l-tableSquare">InP</th>
+        <th mat-sort-header="searchFusion0" class="l-tableSquare" disabled></th>
+        <th mat-sort-header="tribe1" class="l-tableSquare">Tribe</th>
+        <th mat-sort-header="name1" class="l-tableSquare">Name</th>
+        <th mat-sort-header="level1" class="l-tableSquare">Lvl</th>
+        <th mat-sort-header="collected1" class="l-tableSquare">Col</th>
+        <th mat-sort-header="easy1" class="l-tableSquare">Eas</th>
+        <th mat-sort-header="inParty1" class="l-tableSquare">InP</th>
+        <th mat-sort-header="searchFusion1" class="l-tableSquare" disabled></th>
+      </tr>
+
+      <tr mat-row *ngFor="let demons of displayedFusions">
+        <td class="l-tableSquare" [appAlignment]="demons[0]">{{demons[0].tribe}}</td>
+        <td class="l-tableSquare l-tableSquareLink">
+          <button mat-button class="l-tableSquareLink" (click)="updateDemon(demons[0])" [appImageTooltip]="demons[0]">
+            <span [appAlignment]="demons[0]">{{demons[0].name}}</span>
+          </button>
+        </td>
+        <td class="l-tableSquare">{{demons[0].level}}</td>
+        <td class="l-tableSquare"><mat-icon *ngIf="demons[0].userInfo.collected" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare"><mat-icon *ngIf="demons[0].userInfo.easy" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare"><mat-icon *ngIf="demons[0].userInfo.inParty" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare">
+          <button mat-icon-button matTooltip="Search chained fusions" matTooltipPosition="left"
+            (click)="showDemonFusionDetails(demons[0])"><mat-icon>search</mat-icon></button>
+        </td>
+        <td class="l-tableSquare" [appAlignment]="demons[1]">{{demons[1].tribe}}</td>
+        <td class="l-tableSquare l-tableSquareLink">
+          <button mat-button class="l-tableSquareLink" (click)="updateDemon(demons[1])" [appImageTooltip]="demons[1]">
+            <span [appAlignment]="demons[1]">{{demons[1].name}}</span>
+          </button>
+        </td>
+        <td class="l-tableSquare l-tableSquare-number">{{demons[1].level}}</td>
+        <td class="l-tableSquare"><mat-icon *ngIf="demons[1].userInfo.collected" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare"><mat-icon *ngIf="demons[1].userInfo.easy" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare"><mat-icon *ngIf="demons[1].userInfo.inParty" fontIcon="check"></mat-icon></td>
+        <td class="l-tableSquare">
+          <button mat-icon-button matTooltip="Search chained fusions" matTooltipPosition="left"
+            (click)="showDemonFusionDetails(demons[1])"><mat-icon>search</mat-icon></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <p *ngIf="displayedFusions && !demon.fusions && displayedFusions?.length === 0" class="l-demonDetails-helpMessage">
+    There is no fusion available.
+  </p>
+</div>
+<p *ngIf="!demon" class="l-demonDetails-helpMessage">
+  Click on any demon name to see its direct fusions.
+</p>

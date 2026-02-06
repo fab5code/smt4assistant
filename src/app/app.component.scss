@@ -1,0 +1,31 @@
+.l-main-header {
+  height: 30px;
+  flex: 0 0 auto;
+}
+
+.l-main-header-title {
+  position: absolute;
+  top: 5px;
+  left: 32px;
+  font-size: 18px;
+}
+
+.l-main-header-menu {
+  position: absolute;
+  top: 1px;
+  right: 3px;
+  z-index: 10;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+}
+
+.l-main-logo {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.l-mainTabs {
+  height: 100%;
+}

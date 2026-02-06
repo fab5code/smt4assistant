@@ -1,0 +1,71 @@
+<div class="l-flexContainer">
+<div class="l-fusionSearch-form">
+  <mat-form-field class="l-fusionSearch-input">
+    <mat-label>In party demon</mat-label>
+    <mat-select [(ngModel)]="selectedInPartyDemon" #inPartyDemonSelect>
+      <mat-option>No filter</mat-option>
+      <mat-option *ngFor="let demon of inPartyDemons" [value]="demon">
+        <span [appAlignment]="demon">{{demon.tribe}} {{demon.name}} {{demon.level}}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="l-fusionSearch-input">
+    <mat-label>Temporary demon in party</mat-label>
+    <input type="text" [(ngModel)]="temporaryDemon" matInput [matAutocomplete]="temporaryDemonAutocomplete" [formControl]="temporaryDemonFormControl">
+    <mat-autocomplete autoActiveFirstOption #temporaryDemonAutocomplete="matAutocomplete" [displayWith]="displayTemporaryDemonOption">
+      <mat-option *ngFor="let tempDemon of filteredTemporaryDemons | async" [value]="tempDemon">
+        <span [appAlignment]="tempDemon">{{tempDemon.tribe}} {{tempDemon.name}} {{tempDemon.level}}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button mat-flat-button (click)="search(inPartyDemonSelect.value)">Search</button>
+</div>
+<div *ngIf="sortedSearchResults && sortedSearchResults.length > 0" class="l-flexContainer l-flexGrowingChild">
+  <h3 class="l-demonDetails-fusionTitle">Fusions <span>({{sortedSearchResults.length}})</span></h3>
+  <div class="l-flexGrowingChild">
+    <table mat-table matSort (matSortChange)="sortSearchResults($event)" class="l-table">
+      <tr class="l-tableHeader">
+        <th mat-sort-header="score" class="l-tableSquare">Score</th>
+        <th mat-sort-header="tribe" class="l-tableSquare">Tribe</th>
+        <th mat-sort-header="name" class="l-tableSquare">Name</th>
+        <th mat-sort-header="level" class="l-tableSquare">Lvl</th>
+        <th mat-sort-header="inPartyDemons" class="l-tableSquare" disabled>In party</th>
+        <th mat-sort-header="searchFusion" class="l-tableSquare" disabled></th>
+      </tr>
+
+      <tr mat-row *ngFor="let result of sortedSearchResults">
+        <td class="l-tableSquare l-tableSquare-number">{{result.score}}</td>
+        <td class="l-tableSquare" [appAlignment]="result.target">{{result.target.tribe}}</td>
+        <td class="l-tableSquare l-tableSquareLink">
+          <button mat-button class="l-tableSquareLink" (click)="showDemonDetails(result.target)" [appImageTooltip]="result.target">
+            <span [appAlignment]="result.target">{{result.target.name}}</span>
+          </button>
+        </td>
+        <td class="l-tableSquare l-tableSquare-number">{{result.target.level}}</td>
+        <td class="l-tableSquare">
+          <span *ngFor="let inPartyDemon of result.inPartyDemons">
+            <button mat-button class="l-tableSquareLink" (click)="showDemonDetails(inPartyDemon)" [appImageTooltip]="inPartyDemon">
+              <span [appAlignment]="inPartyDemon">{{inPartyDemon.tribe}} </span>
+              <span [appAlignment]="inPartyDemon">{{inPartyDemon.name}} </span>
+              <span [appAlignment]="inPartyDemon">({{inPartyDemon.level}})</span>
+            </button>
+          </span>
+        </td>
+        <td class="l-tableSquare">
+          <button mat-icon-button matTooltip="Search chained fusions" matTooltipPosition="left"
+              (click)="showDemonFusionDetails(result.target, inPartyDemonSelect.value)"><mat-icon>search</mat-icon></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<p *ngIf="sortedSearchResults && sortedSearchResults.length === 0" class="l-demonDetails-helpMessage">
+  There is no fusion available for demons in player level range and that are not collected, easy to scout or in party.
+</p>
+<p *ngIf="!sortedSearchResults" class="l-demonDetails-helpMessage">
+  Search the available demons in player level range which can be chained fusions using only the demons marked as easy to scout and in party and elementals.
+  Already collected, easy to scout and in party demons are not searched.
+</p>
+</div>
