@@ -2,7 +2,7 @@
 The aim of this application is to provide an easy way to manage fusions while playing the video game Shin Megami Tensei IV.
 You can use this application to search for available direct and chained fusions considering the player level, the demons in your party and demons you have marked as easy to scout.
 
-You can use the application here: [](TODO: add link).
+You can use the application here: [https://github.io/fab5code/smt4assistant](https://github.io/fab5code/smt4assistant).
 
 Beside the application itself you may be curious of
 
@@ -37,7 +37,7 @@ The demons data (tribes, names, levels, stats, resistances, skills...) was taken
 ### Full images
 The images were taken from a fan made hd texture pack of the game [https://community.citra-emu.org/t/kasaskis-shin-megami-tensei-iv-hd-texture-pack/180130](https://community.citra-emu.org/t/kasaskis-shin-megami-tensei-iv-hd-texture-pack/180130). Each demon image from the texture pack was nameless so a lot of work (mostly using scripts) was done to identify each image.
 
-The images in the application have a lower resolution than the ones in the texture pack for loading performance. The images are available in [src/assets/img/demons/](TODO: add link).
+The images in the application have a lower resolution than the ones in the texture pack for loading performance. The images are available in [src/assets/img/demons/](https://github.com/fab5code/smt4assistant/tree/main/src/assets/img/demons).
 
 ### Thumbnails
 The texture pack also has a thumbnail for each demon. A thumbnail is not the whole image here but a small portion of the image that represents well the demon. The thumbnails used in the applications were created by identifying in which image belongs each texture pack thumbnail and recreating it from the hd image.
@@ -52,7 +52,7 @@ Then copy the files data/generated/demons.json and data/generated/fusionsByDemon
 In case of a demon name change, the image and thumbnail need to be changed too to match the same name.
 
 ## Algorithm for chained fusions
-The code to compute chained fusions is available in [src/app/fusionSearch.ts](TODO: add link).
+The code to compute chained fusions is available in [src/app/fusionSearch.ts](https://github.com/fab5code/smt4assistant/blob/main/src/app/fusionSearch.ts).
 
 Computing all possible combinations of fusions is intractable. Instead we limit the depth of the chained fusions. We call a fusion result one graph of fusions whose leaves are easy to scout or in party demons or elementals. Elementals are processed differently because of their high fusion combinations. Each fusion result is given a score depending on the leaves of the graph ie the ingredients of the chained fusion. The results are sorted from the lowest score and only the first 50 results are displayed in the application.
 

@@ -22,7 +22,7 @@ jobs:
           node-version: 18
 
       - run: npm ci
-      - run: npm run build -- --base-href=/smt4assistant/
+      - run: npm run build -- --configuration production --base-href=/smt4assistant/
 
       - uses: actions/upload-pages-artifact@v3
         with:
