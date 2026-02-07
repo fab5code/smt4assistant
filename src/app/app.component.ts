@@ -1,11 +1,11 @@
+import {Component} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {Subject} from 'rxjs';
 import * as demonsData from '../assets/files/demons.json';
-import { Component } from '@angular/core';
-import { Demon } from './demon';
-import { downloadUserData, getPlayerInfo, saveDemonUserInfos, savePlayerInfo, updateDemonsWithDemonUserInfos, updateDemonsWithDemonUserInfosFromLocalStorage } from './manageUserData';
-import { FusionSearcher, SearchDemonOptions } from './fusionSearch';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { PlayerInfo } from './playerInfo';
-import { Subject } from 'rxjs';
+import {Demon} from './demon';
+import {FusionSearcher, SearchDemonOptions} from './fusionSearch';
+import {downloadUserData, getPlayerInfo, saveDemonUserInfos, savePlayerInfo, updateDemonsWithDemonUserInfos, updateDemonsWithDemonUserInfosFromLocalStorage} from './manageUserData';
+import {PlayerInfo} from './playerInfo';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +41,7 @@ export class AppComponent {
       this.demons.set(demonName, demon);
     }
     updateDemonsWithDemonUserInfosFromLocalStorage(this.demons);
-    this.playerInfo = getPlayerInfo() ?? {level: 99};
+    this.playerInfo = getPlayerInfo() ?? {level: 5};
     this.fusionSearcher = new FusionSearcher(this.demons, this.playerInfo);
   }
 

@@ -1,7 +1,7 @@
 <div class="l-flexContainer">
   <header class="l-main-header">
     <img src="./assets/img/favicon32x32.png" width="22" height="22" class="l-main-logo">
-    <span class="l-main-header-title">Shin Megami Tensi IV Fusion Assistant</span>
+    <span class="l-main-header-title">Shin Megami Tensei IV Fusion Assistant</span>
     <button class="l-main-header-menu" mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -15,30 +15,35 @@
         <span>Download player data</span>
       </button>
     </mat-menu>
-    <input #importFile type='file' accept="application/JSON" hidden (change)="importUserData($event.target)"/>
+    <input #importFile type='file' accept="application/JSON" hidden (change)="importUserData($event.target)" />
   </header>
   <section class="l-flexGrowingChild">
     <mat-tab-group class="l-mainTabs" animationDuration="0ms" [(selectedIndex)]="mainTabsIndex" preserveContent>
       <mat-tab label="Demons">
-        <app-demon-list [demons]="demons" [playerInfo]="playerInfo" (showDetails)="onShowDetails($event)" (showFusionDetails)="onShowFusionDetails($event)"
-            (onInPartyChange)="onInPartyChange()" (onDemonUserInfoChange)="onDemonUserInfoChange()"></app-demon-list>
+        <app-demon-list [demons]="demons" [playerInfo]="playerInfo" (showDetails)="onShowDetails($event)"
+          (showFusionDetails)="onShowFusionDetails($event)" (onInPartyChange)="onInPartyChange()"
+          (onDemonUserInfoChange)="onDemonUserInfoChange()"></app-demon-list>
       </mat-tab>
       <mat-tab label="Detail">
-        <app-demon-details [demons]="demons" [onShowDetails]="showDetailsSubject.asObservable()" [playerInfo]="playerInfo"
-            (showFusionDetails)="onShowFusionDetails($event)" (onInPartyChange)="onInPartyChange()" (onDemonUserInfoChange)="onDemonUserInfoChange()"></app-demon-details>
+        <app-demon-details [demons]="demons" [onShowDetails]="showDetailsSubject.asObservable()"
+          [playerInfo]="playerInfo" (showFusionDetails)="onShowFusionDetails($event)"
+          (onInPartyChange)="onInPartyChange()" (onDemonUserInfoChange)="onDemonUserInfoChange()"></app-demon-details>
       </mat-tab>
       <mat-tab label="Fusion">
-        <app-fusion [demons]="demons" [playerInfo]="playerInfo" [fusionSearcher]="fusionSearcher" [onInPartyChangeObservable]="onInPartyChangeSubject.asObservable()"
-        [onPlayerLevelChangeObservable]="onPlayerLevelChangeSubject.asObservable()"
-        (showDetails)="onShowDetails($event)" (showFusionDetails)="onShowFusionDetails($event)"></app-fusion>
+        <app-fusion [demons]="demons" [playerInfo]="playerInfo" [fusionSearcher]="fusionSearcher"
+          [onInPartyChangeObservable]="onInPartyChangeSubject.asObservable()"
+          [onPlayerLevelChangeObservable]="onPlayerLevelChangeSubject.asObservable()"
+          (showDetails)="onShowDetails($event)" (showFusionDetails)="onShowFusionDetails($event)"></app-fusion>
       </mat-tab>
       <mat-tab label="Fusion details">
-        <app-fusion-details [demons]="demons" [fusionSearcher]="fusionSearcher" [onShowFusionDetails]="showFusionDetailsSubject.asObservable()"
-            (showDetails)="onShowDetails($event)" (onInPartyChange)="onInPartyChange()" (onDemonUserInfoChange)="onDemonUserInfoChange()"></app-fusion-details>
+        <app-fusion-details [demons]="demons" [fusionSearcher]="fusionSearcher"
+          [onShowFusionDetails]="showFusionDetailsSubject.asObservable()" (showDetails)="onShowDetails($event)"
+          (onInPartyChange)="onInPartyChange()" (onDemonUserInfoChange)="onDemonUserInfoChange()"></app-fusion-details>
       </mat-tab>
       <mat-tab label="Player">
-        <app-player-details [playerInfo]="playerInfo" [demons]="demons" [onDemonUserInfoChangeObservable]="onDemonUserInfoChangeSubject.asObservable()"
-            (onPlayerLevelChange)="onPlayerLevelChange()"></app-player-details>
+        <app-player-details [playerInfo]="playerInfo" [demons]="demons"
+          [onDemonUserInfoChangeObservable]="onDemonUserInfoChangeSubject.asObservable()"
+          (onPlayerLevelChange)="onPlayerLevelChange()"></app-player-details>
       </mat-tab>
       <mat-tab label="About">
         <app-about></app-about>
